@@ -1,30 +1,57 @@
-from selenium.webdriver import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from Pages.Base import BasePage
 
-"""This class is the parent of all pages """
-"""it contains all the generic methods and utilities for all the pages"""
+class HomePage(BasePage):
 
-class BasePage:
+  logo_xpath = "//img[@alt='logo']"
+  product_xpath="//span[contains(text(),'product')]"
+  about_xpath = "//span[contains(text(),'About')]"
+  clients_xpath = "//span[contains(text(),'clients')]"
+  team_xpath = "//span[contains(text(),'team')]"
+  register_xpath = "//span[contains(text(),'register')]"
+  featured_xpath = "//span[contains(text(),'featured')]"
+  blog_xpath = "//span[contains(text(),'blog')]"
+  contactus_xpath = "//span[contains(text(),'contactus')]"
+  searchicon_className = "search"
+  signin_className = "signin"
 
-    def __init__(self, driver):
-         self.driver = driver
+  "constructor"
+  def __init__(self, driver):
+        super()._init_(driver)
 
-    def do_click(self,by_locator):
-         WebDriverWait(self.driver,10).until(EC.Visibility_of_element_located(by_locator)).click()
+  def logo_displayed(self,by_locator):
+        return self.is_visible(self.logo_xpath)
 
-    def do_send_keys(self,by_locator,text):
-        WebDriverWait(self.driver, 10).until(EC.Visibility_of_element_located(by_locator)).send_keys(text)
-    def get_element_text(self,by_locator):
-        element = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(by_locator))
-        return element.text
-    def is_enabled(self,by_locator):
-        element=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
-        return boo(element)
-    def get_title(self,title):
-        WebDriverWait(self.driver,10).until(EC.title_is(title))
-        return self.driver.title
-    def is_displayed(self,by_locator):
-        element=WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(by_locator))
-        return boo(element)
+  def get_title(self,title):
+      return self.get_title(title)
 
+  def do_product_link_click(self,by_locator):
+      self.do_click(self.product_xpath)
+
+  def do_client_link_click(self,by_locator):
+      self.do_click(self.clients_xpath)
+
+  def do_team_click_link(self,by_locator):
+      self.do_click(self,team_xpath)
+
+  def do_blog_click_link(self,by_locator):
+      self.do_click(self.blog_xpath)
+
+  def do_about_click_link(self, by_locator):
+    self.do_click(self.about_xpath)
+
+  def do_featured_click_link(self, by_locator):
+      self.do_click(self.featured_xpath)
+
+  def do_register_click_link(self, by_locator):
+      self.do_click(self.register_xpath)
+
+  def do_contactus_click_link(self, by_locator):
+      self.do_click(self.contactus_xpath)
+
+  def do_check_searchicon_displayed(self,by_locator):
+      return self.is_displayed(self.searchicon_className)
+
+  def do_check_signin_displayed(self,by_locator):
+      return self.is_displayed(self.signin_className)
