@@ -1,23 +1,30 @@
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-class HomePage:
-  logo_xpath = "//img[@alt='logo']"
-  product_xpath="//span[contains(text(),'product')]"
-  about_xpath = "//span[contains(text(),'About')]"
-  clients_xpath = "//span[contains(text(),'clients')]"
-  team_xpath = "//span[contains(text(),'team')]"
-  register_xpath = "//span[contains(text(),'register')]"
-  featured_xpath = "//span[contains(text(),'featured')]"
-  blog_xpath = "//span[contains(text(),'blog')]"
-  contactus_xpath = "//span[contains(text(),'contactus')]"
-  searchicon_className = "search"
-  signin_className = "signin"
+"""This class is the parent of all pages """
+"""it contains all the generic methods and utilities for all the pages"""
 
+class BasePage:
 
-  def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, driver):
+         self.driver = driver
 
-  def clickonLogin(self):
-        self.driver.find_element_by_xpath(self.logo_xpath).is_displayed()
+    def do_click(self,by_locator):
+         WebDriverWait(self.driver,10).until(EC.Visibility_of_element_located(by_locator)).click()
+
+    def do_send_keys(self,by_locator,text):
+        WebDriverWait(self.driver, 10).until(EC.Visibility_of_element_located(by_locator)).send_keys(text)
+    def get_element_text(self,by_locator):
+        element = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(by_locator))
+        return element.text
+    def is_enabled(self,by_locator):
+        element=WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+        return boo(element)
+    def get_title(self,title):
+        WebDriverWait(self.driver,10).until(EC.title_is(title))
+        return self.driver.title
+    def is_displayed(self,by_locator):
+        element=WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(by_locator))
+        return boo(element)
 
